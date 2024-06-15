@@ -3,48 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop Beispiel mit Grundraster</title>
+    <title>Drag and Drop Beispiel mit vollständigem SVG-Raster</title>
     <style>
         #container {
             width: 100%;
-            max-width: 1120px;
             height: auto;
-            aspect-ratio: 1120 / 500; /* Bildverhältnis beibehalten */
             border: 2px solid #000;
             position: relative;
-            background-image: url('grundraster.jpg');
-            background-size: contain;
-            background-repeat: no-repeat;
+        }
+        svg {
+            width: 100%;
+            height: auto;
         }
         .draggable {
-            width: 50px;
-            height: 50px;
             position: absolute;
             cursor: move;
             touch-action: none; /* Verhindert das Standardverhalten bei Touch */
         }
         .rectangle {
             background-color: red;
-            height: 50px; /* Höhe eines Rechtecks */
-            width: 100px; /* Breite eines Rechtecks */
+            height: 128px; /* Höhe eines Rechtecks (2 Raster) */
+            width: 192px; /* Breite eines Rechtecks (3 Raster) */
         }
         .square {
             background-color: blue;
-            height: 50px; /* Höhe eines Quadrats */
-            width: 50px; /* Breite eines Quadrats */
+            height: 128px; /* Höhe eines Quadrats (2 Raster) */
+            width: 128px; /* Breite eines Quadrats (2 Raster) */
+        }
+        @media (max-width: 600px) {
+            .rectangle {
+                height: 64px; /* Höhe eines Rechtecks (2 Raster) */
+                width: 96px; /* Breite eines Rechtecks (3 Raster) */
+            }
+            .square {
+                height: 64px; /* Höhe eines Quadrats (2 Raster) */
+                width: 64px; /* Breite eines Quadrats (2 Raster) */
+            }
         }
     </style>
 </head>
 <body>
     <div id="container">
-        <div class="draggable rectangle" style="top: 10px; left: 10px;"></div>
-        <div class="draggable rectangle" style="top: 70px; left: 10px;"></div>
-        <div class="draggable rectangle" style="top: 130px; left: 10px;"></div>
-        <div class="draggable rectangle" style="top: 190px; left: 10px;"></div>
-        <div class="draggable square" style="top: 250px; left: 10px;"></div>
-        <div class="draggable square" style="top: 310px; left: 10px;"></div>
-        <div class="draggable square" style="top: 370px; left: 10px;"></div>
-        <div class="draggable square" style="top: 430px; left: 10px;"></div>
+        <svg viewBox="0 0 2240 1600" xmlns="http://www.w3.org/2000/svg">
+            <!-- Außenrahmen -->
+            <rect x="0" y="0" width="2240" height="1600" fill="none" stroke="black" stroke-width="2"/>
+            <!-- Rasterlinien -->
+            <g stroke="black" stroke-width="0.5">
+                <!-- Horizontal lines -->
+                <line x1="64" y1="64" x2="2176" y2="64"/>
+                <line x1="64" y1="128" x2="2176" y2="128"/>
+                <line x1="64" y1="192" x2="2176" y2="192"/>
+                <line x1="64" y1="256" x2="2176" y2="256"/>
+                <line x1="64" y1="320" x2="2176" y2="320"/>
+                <line x1="64" y1="384" x2="2176" y2="384"/>
+                <line x1="64" y1="448" x2="2176" y2="448"/>
+                <line x1="64" y1="512" x2="2176" y2="512"/>
+                <line x1="64" y1="576" x2="2176" y2="576"/>
+                <line x1="64" y1="640" x2="2176" y2="640"/>
+                <line x1="64" y1="704" x2="2176" y2="704"/>
+                <line x1="64" y1="768" x2="2176" y2="768"/>
+                <line x1="64" y1="832" x2="2176" y2="832"/>
+                <line x1="64" y1="896" x2="2176" y2="896"/>
+                <line x1="64" y1="960" x2="2176" y2="960"/>
+                <line x1="64" y1="1024" x2="2176" y2="1024"/>
+                <line x1="64" y1="1088" x2="2176" y2="1088"/>
+                <line x1="64" y1="1152" x2="2176" y2="1152"/>
+                <line x1="64" y1="1216" x2="2176" y2="1216"/>
+                <line x1="64" y1="1280" x2="2176" y2="1280"/>
+                <line x1="64" y1="1344" x2="2176" y2="1344"/>
+                <line x1="64" y1="1408" x2="2176" y2="1408"/>
+                <line x1="64" y1="1472" x2="2176" y2="1472"/>
+                <line x1="64" y1="1536" x2="2176" y2="1536"/>
+                <!-- Vertikale Linien -->
+                <line x1="64" y1="64" x2="64" y2="1536"/>
+                <line x1="128" y1="64" x2="128" y2="1536"/>
+                <line x1="192" y1="64" x2="192" y2="1536"/>
+                <line x1="256" y1="64" x2="256" y2="1536"/>
+                <line x1="320" y1="64" x2="320" y2="1536"/>
+                <line x1="384" y1="64" x2="384" y2="1536"/>
+                <line x1="448" y1="64" x2="448" y2="1536"/>
+                <line x1="512" y1="64" x2="512" y2="1536"/>
+                <line x1="576" y1="64" x2="576" y2="1536"/>
+                <line x1="640" y1="64" x2="640" y2="1536"/>
+                <line x1="704" y1="64" x2="704" y2="1536"/>
+                <line x1="768" y1="64" x2="768" y2="1536"/>
+                <line x1="832" y1="64" x2="832" y2="1536"/>
+                <line x1="896" y1="64" x2="896" y2="1536"/>
+                <line x1="960" y1="64" x2="960" y2="1536"/>
+                <line x1="1024" y1="64" x2="1024" y2="1536"/>
+                <line x1="1088" y1="64" x2="1088" y2="1536"/>
+                <line x1="1152" y1="64" x2="1152" y2="1536"/>
+                <line x1="1216" y1="64" x2="1216" y2="1536"/>
+                <line x1="1280" y1="64" x2="1280" y2="1536"/>
+                <line x1="1344" y1="64" x2="1344" y2="1536"/>
+                <line x1="1408" y1="64" x2="1408" y2="1536"/>
+                <line x1="1472" y1="64" x2="1472" y2="1536"/>
+                <line x1="1536" y1="64" x2="1536" y2="1536"/>
+                <line x1="1600" y1="64" x2="1600" y2="1536"/>
+                <line x1="1664" y1="64" x2="1664" y2="1536"/>
+                <line x1="1728" y1="64" x2="1728" y2="1536"/>
+                <line x1="1792" y1="64" x2="1792" y2="1536"/>
+                <line x1="1856" y1="64" x2="1856" y2="1536"/>
+                <line x1="1920" y1="64" x2="1920" y2="1536"/>
+                <line x1="1984" y1="64" x2="1984" y2="1536"/>
+                <line x1="2048" y1="64" x2="2048" y2="1536"/>
+                <line x1="2112" y1="64" x2="2112" y2="1536"/>
+            </g>
+            <!-- Freie Bereiche um den Rand und in der Mitte -->
+            <g fill="white" stroke="none">
+                <!-- Rand -->
+                <rect x="0" y="0" width="64" height="1600"/>
+                <rect x="2176" y="0" width="64" height="1600"/>
+                <rect x="0" y="0" width="2240" height="64"/>
+                <rect x="0" y="1536" width="2240" height="64"/>
+                <!-- Mittlerer Bereich (horizontal) -->
+                <rect x="0" y="704" width="2240" height="192"/>
+            </g>
+        </svg>
+
+        <div class="draggable rectangle" style="top: 128px; left: 128px;"></div>
+        <div class="draggable rectangle" style="top: 320px; left: 128px;"></div>
+        <div class="draggable rectangle" style="top: 512px; left: 128px;"></div>
+        <div class="draggable rectangle" style="top: 704px; left: 128px;"></div>
+        <div class="draggable square" style="top: 896px; left: 128px;"></div>
+        <div class="draggable square" style="top: 1088px; left: 128px;"></div>
+        <div class="draggable square" style="top: 1280px; left: 128px;"></div>
+        <div class="draggable square" style="top: 1472px; left: 128px;"></div>
     </div>
 
     <script>
