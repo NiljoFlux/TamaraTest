@@ -31,13 +31,17 @@
             width: 128px; /* Breite eines Quadrats (2 Raster) */
         }
         @media (max-width: 600px) {
+            svg {
+                width: 100%;
+                height: auto;
+            }
             .rectangle {
-                height: 64px; /* Höhe eines Rechtecks (2 Raster) */
-                width: 96px; /* Breite eines Rechtecks (3 Raster) */
+                height: 32px; /* Höhe eines Rechtecks (0,5 Raster) */
+                width: 64px; /* Breite eines Rechtecks (1 Raster) */
             }
             .square {
-                height: 64px; /* Höhe eines Quadrats (2 Raster) */
-                width: 64px; /* Breite eines Quadrats (2 Raster) */
+                height: 32px; /* Höhe eines Quadrats (0,5 Raster) */
+                width: 32px; /* Breite eines Quadrats (0,5 Raster) */
             }
         }
     </style>
