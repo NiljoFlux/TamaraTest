@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop Beispiel</title>
+    <title>Drag and Drop Beispiel mit Grundraster</title>
     <style>
         #container {
-            width: 500px;
-            height: 500px;
+            width: 100%;
+            max-width: 1120px;
+            height: auto;
+            aspect-ratio: 1120 / 500; /* Bildverhältnis beibehalten */
             border: 2px solid #000;
             position: relative;
+            background-image: url('grundraster.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
         }
         .draggable {
             width: 50px;
             height: 50px;
             position: absolute;
             cursor: move;
+            touch-action: none; /* Verhindert das Standardverhalten bei Touch */
         }
         .rectangle {
             background-color: red;
@@ -47,15 +53,21 @@
             let isRotating = false;
             let rotationAngle = 0;
 
-            item.addEventListener('mousedown', function(e) {
-                if (e.button === 2) { // Right-click for rotation
-                    isRotating = true;
-                    document.addEventListener('mousemove', rotateElement);
-                    document.addEventListener('mouseup', stopRotatingElement);
-                } else {
+            item.addEventListener('mousedown', startDrag);
+            item.addEventListener('touchstart', startDrag);
+
+            function startDrag(e) {
+                e.preventDefault();
+                if (e.type === 'touchstart' || e.button !== 2) {
                     isDragging = true;
-                    let shiftX = e.clientX - item.getBoundingClientRect().left;
-                    let shiftY = e.clientY - item.getBoundingClientRect().top;
+                    let shiftX, shiftY;
+                    if (e.type === 'touchstart') {
+                        shiftX = e.touches[0].clientX - item.getBoundingClientRect().left;
+                        shiftY = e.touches[0].clientY - item.getBoundingClientRect().top;
+                    } else {
+                        shiftX = e.clientX - item.getBoundingClientRect().left;
+                        shiftY = e.clientY - item.getBoundingClientRect().top;
+                    }
 
                     function moveAt(pageX, pageY) {
                         item.style.left = pageX - shiftX + 'px';
@@ -64,19 +76,36 @@
 
                     function onMouseMove(event) {
                         if (isDragging) {
-                            moveAt(event.pageX, event.pageY);
+                            if (event.type === 'touchmove') {
+                                moveAt(event.touches[0].pageX, event.touches[0].pageY);
+                            } else {
+                                moveAt(event.pageX, event.pageY);
+                            }
                         }
                     }
 
                     document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('touchmove', onMouseMove);
 
                     item.onmouseup = function() {
                         document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('touchmove', onMouseMove);
                         isDragging = false;
                         item.onmouseup = null;
                     };
+
+                    item.ontouchend = function() {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('touchmove', onMouseMove);
+                        isDragging = false;
+                        item.ontouchend = null;
+                    };
+                } else if (e.button === 2) { // Right-click for rotation
+                    isRotating = true;
+                    document.addEventListener('mousemove', rotateElement);
+                    document.addEventListener('mouseup', stopRotatingElement);
                 }
-            });
+            }
 
             function rotateElement(event) {
                 rotationAngle += event.movementX;
