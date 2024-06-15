@@ -58,7 +58,10 @@
 
             function startDrag(e) {
                 e.preventDefault();
-                if (e.type === 'touchstart' || e.button !== 2) {
+                if (e.type === 'touchstart' && e.touches.length === 2) {
+                    isRotating = true;
+                    startRotate(e);
+                } else if (e.type === 'mousedown' || (e.type === 'touchstart' && e.touches.length === 1)) {
                     isDragging = true;
                     let shiftX, shiftY;
                     if (e.type === 'touchstart') {
@@ -100,21 +103,36 @@
                         isDragging = false;
                         item.ontouchend = null;
                     };
-                } else if (e.button === 2) { // Right-click for rotation
-                    isRotating = true;
-                    document.addEventListener('mousemove', rotateElement);
-                    document.addEventListener('mouseup', stopRotatingElement);
                 }
             }
 
-            function rotateElement(event) {
-                rotationAngle += event.movementX;
-                item.style.transform = `rotate(${rotationAngle}deg)`;
+            function startRotate(e) {
+                let initialAngle = getAngle(e.touches);
+                function onTouchMove(event) {
+                    if (isRotating && event.touches.length === 2) {
+                        let currentAngle = getAngle(event.touches);
+                        rotationAngle += currentAngle - initialAngle;
+                        item.style.transform = `rotate(${rotationAngle}deg)`;
+                        initialAngle = currentAngle;
+                    }
+                }
+
+                function onTouchEnd(event) {
+                    if (event.touches.length < 2) {
+                        document.removeEventListener('touchmove', onTouchMove);
+                        document.removeEventListener('touchend', onTouchEnd);
+                        isRotating = false;
+                    }
+                }
+
+                document.addEventListener('touchmove', onTouchMove);
+                document.addEventListener('touchend', onTouchEnd);
             }
 
-            function stopRotatingElement() {
-                document.removeEventListener('mousemove', rotateElement);
-                isRotating = false;
+            function getAngle(touches) {
+                let dx = touches[1].clientX - touches[0].clientX;
+                let dy = touches[1].clientY - touches[0].clientY;
+                return Math.atan2(dy, dx) * (180 / Math.PI);
             }
 
             item.ondragstart = function() {
